@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Example</title>
+    <script>
+        // Function to set a cookie
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        // Function to get a cookie value by name
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                while (cookie.charAt(0) === ' ') {
+                    cookie = cookie.substring(1, cookie.length);
+                }
+                if (cookie.indexOf(nameEQ) === 0) {
+                    return cookie.substring(nameEQ.length, cookie.length);
+                }
+            }
+            return null;
+        }
+
+        // Function to check if a cookie with the given name exists
+        function checkCookie() {
+            var user = getCookie("username");
+            if (user !== null && user !== "") {
+                alert("Welcome back, " + user + "!");
+            } else {
+                user = prompt("Please enter your name:", "");
+                if (user !== "" && user !== null) {
+                    setCookie("username", user, 30);
+                }
+            }
+        }
+    </script>
+</head>
+<body onload="checkCookie()">
+    <h1>Cookie Example</h1>
+    <p>This page demonstrates setting and retrieving cookies using JavaScript.</p>
+    <p>Refresh the page to see cookie functionality.</p>
+</body>
+</html>
